@@ -122,7 +122,10 @@ Also supports modern mobile browsers on:
 
 iOS
 Android
-📁 Project Structure
+
+## 📁 Project Structure
+
+```text
 vault/
 ├── src/
 │   ├── components/
@@ -134,6 +137,9 @@ vault/
 ├── package.json
 ├── vite.config.js
 └── ...
+
+```
+
 🔐 The Idea
 
 Information gets scattered everywhere.
@@ -154,4 +160,4 @@ cd vault
 npm install
 npm run dev
 
-Then open http://localhost:5174/ and start building your vault. 🔐
+Happy vaulting! 🔐
