@@ -1,0 +1,127 @@
+.container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow);
+}
+
+.modeSelector h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--accent-blush);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.modeButton {
+  flex: 1;
+  min-width: 140px;
+  padding: 12px 20px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+}
+
+.modeButton:hover:not(:disabled) {
+  background: var(--bg-accent-hover);
+  border-color: var(--accent-coral);
+  box-shadow: var(--shadow-accent);
+}
+
+.modeButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent-blush);
+  margin: 0;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.primaryButton {
+  flex: 1;
+  padding: 12px 20px;
+  background: var(--accent-primary);
+  color: var(--text-primary);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-accent);
+}
+
+.secondaryButton {
+  flex: 1;
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: var(--bg-accent-surface);
+  border-color: var(--accent-burgundy);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .modeButton {
+    min-width: unset;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+}

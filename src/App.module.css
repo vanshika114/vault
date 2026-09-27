@@ -1,0 +1,145 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+.header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 20px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow);
+}
+
+.headerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  margin: 0 0 8px 0;
+  letter-spacing: -1px;
+}
+
+.tagline {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 400;
+}
+
+.main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px 40px 20px;
+}
+
+.error {
+  background: var(--bg-pink-surface);
+  border: 1px solid var(--accent-pink);
+  color: var(--accent-pink);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.emptyIcon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent-blush);
+  margin: 0 0 8px 0;
+}
+
+.empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 32px 20px;
+    margin-bottom: 24px;
+  }
+
+  .logo {
+    font-size: 28px;
+  }
+
+  .tagline {
+    font-size: 14px;
+  }
+
+  .main {
+    padding: 0 20px 24px 20px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 24px 16px;
+    margin-bottom: 20px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .main {
+    padding: 0 16px 20px 16px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empty {
+    min-height: 300px;
+  }
+
+  .emptyIcon {
+    font-size: 48px;
+  }
+}

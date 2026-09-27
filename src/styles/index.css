@@ -1,0 +1,191 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Light cream foundation */
+  --bg-primary: #FFF6DC;
+  --bg-secondary: #FFFFFF;
+  --bg-card: #FFFCF5;
+  --bg-input: #FFFFFF;
+  
+  /* Neutral surfaces */
+  --bg-elevated: #FFFFFF;
+  --bg-accent-surface: rgba(66, 91, 154, 0.05);
+  --bg-accent-hover: rgba(66, 91, 154, 0.08);
+  --bg-sky-surface: rgba(118, 192, 236, 0.10);
+  --bg-sky-hover: rgba(118, 192, 236, 0.15);
+  --bg-pink-surface: rgba(255, 149, 165, 0.08);
+  
+  /* Text hierarchy */
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  
+  /* Borders */
+  --border: #e5e5e5;
+  --border-subtle: #d1d5db;
+  --border-accent: #425B9A;
+  --border-sky: #76C0EC;
+  
+  /* Strategic accent palette */
+  --accent-blue: #425B9A;
+  --accent-sky: #76C0EC;
+  --accent-cream: #FFF6DC;
+  --accent-pink: #FF95A5;
+  
+  /* Interactive states */
+  --accent-primary: #425B9A;
+  --accent-primary-hover: #3a4f88;
+  --accent-secondary: #76C0EC;
+  --accent-secondary-hover: #63a8d4;
+  --accent-pink-hover: #e67a8a;
+  
+  /* Functional colors */
+  --danger: #FF95A5;
+  --success: #16a34a;
+  
+  /* Professional shadows */
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-accent: 0 1px 3px rgba(66, 91, 154, 0.15), 0 4px 6px rgba(66, 91, 154, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode adaptation maintaining color relationships */
+    --bg-primary: #1a1815;
+    --bg-secondary: #24201c;
+    --bg-card: #2e2a26;
+    --bg-input: #24201c;
+    --bg-elevated: #34302c;
+    --bg-accent-surface: rgba(66, 91, 154, 0.15);
+    --bg-accent-hover: rgba(66, 91, 154, 0.25);
+    --bg-sky-surface: rgba(118, 192, 236, 0.15);
+    --bg-sky-hover: rgba(118, 192, 236, 0.25);
+    --bg-pink-surface: rgba(255, 149, 165, 0.12);
+    
+    --text-primary: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --text-muted: #707070;
+    
+    --border: #3a3632;
+    --border-subtle: #4a4642;
+    --border-accent: #5a7acb;
+    --border-sky: #76C0EC;
+    
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+    --shadow-accent: 0 1px 3px rgba(66, 91, 154, 0.25), 0 4px 6px rgba(66, 91, 154, 0.15);
+  }
+}
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+body {
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: auto;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 8px 12px;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  transition: border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px var(--bg-accent-surface);
+}
+
+textarea {
+  font-family: 'Monaco', 'Courier New', monospace;
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* Utility classes */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

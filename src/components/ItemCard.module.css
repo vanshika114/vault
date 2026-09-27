@@ -1,0 +1,132 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.card:hover {
+  border-color: var(--accent-coral);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-3px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-blush);
+  margin: 0;
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.deleteButton {
+  padding: 4px 8px;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.deleteButton:hover {
+  background: rgba(152, 29, 38, 0.2);
+  color: var(--accent-coral);
+  transform: none;
+}
+
+.preview {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--bg-accent-surface);
+  color: var(--text-secondary);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.date {
+  flex-shrink: 0;
+}
+
+.imageIndicator {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .preview {
+    font-size: 12px;
+  }
+}
