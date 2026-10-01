@@ -40,6 +40,8 @@ npm run dev
 Then open:
 
 http://localhost:5174/
+
+
 3. Start Using Vault
 Action	What it does
 Write	Create a text note
@@ -90,6 +92,8 @@ Tags
 Note content
 Saved URLs
 Other searchable metadata
+
+
 💾 Data & Privacy
 
 Vault uses IndexedDB to persist data directly in the browser.
@@ -100,6 +104,7 @@ Your vault stays in your browser.
 
 Clearing your browser's site data may remove locally stored Vault data, so keep this in mind before clearing browser storage.
 
+
 ⚡ Performance
 Build size: ~100 KB gzipped
 Search: Instant local search
@@ -108,6 +113,7 @@ Animations: Optimized for smooth interaction
 Rendering: Responsive across screen sizes
 
 Performance figures may vary depending on browser, device, and stored data.
+
 
 🌐 Browser Support
 
