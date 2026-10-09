@@ -59,6 +59,8 @@ React 18	User interface
 Vite	Development & build tooling
 IndexedDB	Local browser storage
 CSS Modules	Component-level styling
+
+
 📦 Available Commands
 
 Install dependencies
@@ -67,11 +69,13 @@ npm install
 Start development server
 npm run dev
 
-# Build for production
+Build for production
 npm run build
 
-# Preview production build
+Preview production build
 npm run preview
+
+
 🏗️ Production Build
 
 Create an optimized production build with:
