@@ -26,7 +26,7 @@ Everything is stored locally in your browser using **IndexedDB**, so your data s
 
 ## 🚀 Quick Start
 
-### 1. Extract & Install
+1. Extract & Install
 
 ```bash
 unzip vault-v1.zip
@@ -52,6 +52,7 @@ Filter	Filter by type or date
 Sort	Sort by newest or oldest
 Edit	Modify an existing item
 Delete	Remove an item
+
 🛠️ Tech Stack
 Technology	Purpose
 React 18	User interface
@@ -59,10 +60,11 @@ Vite	Development & build tooling
 IndexedDB	Local browser storage
 CSS Modules	Component-level styling
 📦 Available Commands
-# Install dependencies
+
+Install dependencies
 npm install
 
-# Start development server
+Start development server
 npm run dev
 
 # Build for production
