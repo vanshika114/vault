@@ -111,21 +111,21 @@ export const AddItemForm = ({ onAdd, loading }) => {
           <p className={styles.subtitle}>Save anything. Find everything.</p>
           <div className={styles.actions}>
             <button
-              className={styles.modeButton}
+              className={`${styles.modeButton} ${styles.primary}`}
               onClick={() => setMode('text')}
               disabled={loading}
             >
               Write
             </button>
             <button
-              className={styles.modeButton}
+              className={`${styles.modeButton} ${styles.secondary}`}
               onClick={() => setMode('link')}
               disabled={loading}
             >
               Paste Link
             </button>
             <button
-              className={styles.modeButton}
+              className={`${styles.modeButton} ${styles.tertiary}`}
               onClick={() => setMode('image')}
               disabled={loading}
             >

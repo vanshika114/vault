@@ -1,6 +1,6 @@
 .container {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 32px;
   margin-bottom: 32px;
@@ -11,7 +11,7 @@
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: var(--accent-blush);
+  color: var(--accent-blue);
 }
 
 .subtitle {
@@ -30,19 +30,48 @@
   flex: 1;
   min-width: 140px;
   padding: 12px 20px;
-  background: var(--bg-elevated);
-  color: var(--text-primary);
+  background: var(--bg-secondary);
+  color: var(--accent-blue);
   font-weight: 600;
   border-radius: 8px;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  border: 1px solid var(--border-subtle);
+  transition: background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  border: 1px solid var(--accent-blue);
   cursor: pointer;
 }
 
+.modeButton.primary {
+  background: var(--accent-blue);
+  color: white;
+  border: 1px solid var(--accent-blue);
+}
+
+.modeButton.secondary {
+  background: var(--bg-secondary);
+  color: var(--accent-blue);
+  border: 1px solid var(--accent-blue);
+}
+
+.modeButton.tertiary {
+  background: var(--bg-secondary);
+  color: var(--accent-sky);
+  border: 1px solid var(--accent-sky);
+}
+
 .modeButton:hover:not(:disabled) {
-  background: var(--bg-accent-hover);
-  border-color: var(--accent-coral);
+  background: var(--bg-accent-surface);
+  border-color: var(--accent-primary-hover);
   box-shadow: var(--shadow-accent);
+  transform: translateY(-1px);
+}
+
+.modeButton.primary:hover:not(:disabled) {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+}
+
+.modeButton.tertiary:hover:not(:disabled) {
+  background: var(--bg-sky-surface);
+  border-color: var(--accent-secondary-hover);
 }
 
 .modeButton:active:not(:disabled) {
@@ -76,11 +105,11 @@
 .primaryButton {
   flex: 1;
   padding: 12px 20px;
-  background: var(--accent-primary);
-  color: var(--text-primary);
+  background: var(--accent-blue);
+  color: white;
   font-weight: 600;
   border-radius: 8px;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   border: none;
   cursor: pointer;
 }
@@ -88,23 +117,25 @@
 .primaryButton:hover:not(:disabled) {
   background: var(--accent-primary-hover);
   box-shadow: var(--shadow-accent);
+  transform: translateY(-1px);
 }
 
 .secondaryButton {
   flex: 1;
   padding: 12px 20px;
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  color: var(--accent-blue);
+  border: 1px solid var(--accent-blue);
   font-weight: 600;
   border-radius: 8px;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
 }
 
 .secondaryButton:hover:not(:disabled) {
   background: var(--bg-accent-surface);
-  border-color: var(--accent-burgundy);
+  border-color: var(--accent-primary-hover);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 640px) {
