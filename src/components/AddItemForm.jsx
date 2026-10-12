@@ -79,23 +79,21 @@ export const AddItemForm = ({ onAdd, loading }) => {
     setUploading(true);
 
     try {
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const base64 = event.target?.result;
-        const tagArray = tags
-          .split(',')
-          .map((t) => t.trim())
-          .filter((t) => t);
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error || new Error('Unable to read image file'));
+        reader.readAsDataURL(file);
+      });
+      const tagArray = tags
+        .split(',')
+        .map((t) => t.trim())
+        .filter((t) => t);
+      const imageTitle = title.trim() || file.name.split('.')[0];
 
-        const imageTitle = title.trim() || file.name.split('.')[0];
-
-        await onAdd('image', imageTitle, base64, description, tagArray);
-        resetForm();
-        if (fileInputRef.current) {
-          fileInputRef.current.value = '';
-        }
-      };
-      reader.readAsDataURL(file);
+      await onAdd('image', imageTitle, base64, description, tagArray, { mimeType: file.type });
+      resetForm();
+      if (fileInputRef.current) fileInputRef.current.value = '';
     } catch (err) {
       alert('Failed to upload image: ' + err.message);
     } finally {

@@ -1,8 +1,36 @@
 {
-	"name": "<WORKER_NAME>",
-	"main": "src/index.js",
-	"compatibility_date": "<COMPATIBILITY_DATE>",
-	"observability": {
-		"enabled": true,
-	},
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vault-sync",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-12",
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vault-sync",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BLOBS",
+      "bucket_name": "vault-sync-blobs"
+    }
+  ],
+  "unsafe": {
+    "bindings": [
+      {
+        "name": "API_LIMITER",
+        "type": "ratelimit",
+        "namespace_id": "1001",
+        "simple": {
+          "limit": 60,
+          "period": 60
+        }
+      }
+    ]
+  }
 }

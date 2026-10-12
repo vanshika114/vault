@@ -5,8 +5,8 @@ export const ItemDetail = ({ item, onUpdate, onClose, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
     title: item.title,
-    description: item.description,
-    tags: item.tags.join(', '),
+    description: item.description || '',
+    tags: (item.tags || []).join(', '),
     content: item.type === 'text' ? item.content : '',
   });
   const [saving, setSaving] = useState(false);
@@ -35,7 +35,7 @@ export const ItemDetail = ({ item, onUpdate, onClose, onDelete }) => {
   };
 
   const handleDelete = () => {
-    if (window.confirm(`Delete "${item.title}" permanently?`)) {
+    if (window.confirm(`Delete "${item.title}"?`)) {
       onDelete(item.id);
     }
   };
@@ -82,7 +82,7 @@ export const ItemDetail = ({ item, onUpdate, onClose, onDelete }) => {
               </div>
             )}
 
-            {item.type === 'image' && (
+            {item.type === 'image' && item.content && (
               <div className={styles.content}>
                 <img src={item.content} alt={item.title} className={styles.image} />
               </div>
@@ -95,11 +95,11 @@ export const ItemDetail = ({ item, onUpdate, onClose, onDelete }) => {
               </div>
             )}
 
-            {item.tags.length > 0 && (
+            {(item.tags || []).length > 0 && (
               <div className={styles.section}>
                 <h4>Tags</h4>
                 <div className={styles.tags}>
-                  {item.tags.map((tag) => (
+                  {(item.tags || []).map((tag) => (
                     <span key={tag} className={styles.tag}>
                       {tag}
                     </span>

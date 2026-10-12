@@ -12,11 +12,34 @@ const initDB = () => {
       return;
     }
 
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    if (typeof indexedDB === 'undefined') {
+      reject(new Error('IndexedDB is unavailable. Vault requires browser storage; disable private browsing or use a supported browser.'));
+      return;
+    }
 
-    request.onerror = () => reject(request.error);
+    let request;
+    try {
+      request = indexedDB.open(DB_NAME, DB_VERSION);
+    } catch (error) {
+      reject(new Error(`Vault browser storage is unavailable. Safari private browsing may block IndexedDB. ${error.message}`));
+      return;
+    }
+
+    request.onerror = () =>
+      reject(
+        new Error(
+          `Vault browser storage is unavailable. Safari private browsing may block IndexedDB. ${
+            request.error?.message || 'Unable to open the database.'
+          }`
+        )
+      );
+    request.onblocked = () => reject(new Error('Vault storage upgrade is blocked by another open tab. Close other Vault tabs and try again.'));
     request.onsuccess = () => {
       db = request.result;
+      db.onversionchange = () => {
+        db.close();
+        db = null;
+      };
       resolve(db);
     };
 
@@ -34,13 +57,19 @@ const initDB = () => {
         database.createObjectStore(META_STORE, { keyPath: 'key' });
       }
 
-      // v1 -> v2: mark all existing items dirty so they get pushed on first sync
-      if (event.oldVersion === 1) {
+      // v1 -> v2: mark existing items dirty so they get pushed on first sync.
+      if (event.oldVersion > 0 && event.oldVersion < 2 && database.objectStoreNames.contains(STORE_NAME)) {
         const store = tx.objectStore(STORE_NAME);
         store.openCursor().onsuccess = (e) => {
           const cursor = e.target.result;
           if (!cursor) return;
-          cursor.update({ ...cursor.value, dirty: true, deleted: false });
+          const existing = cursor.value;
+          cursor.update({
+            ...existing,
+            updatedAt: existing.updatedAt || existing.createdAt || new Date().toISOString(),
+            dirty: true,
+            deleted: Boolean(existing.deleted),
+          });
           cursor.continue();
         };
       }
@@ -60,13 +89,21 @@ const run = async (storeName, mode, fn) => {
 
 // ---- UI-facing (soft-deleted items hidden) ----
 const addItem = async (item) => {
-  await run(STORE_NAME, 'readwrite', (s) => s.add(item));
-  return item;
+  const now = new Date().toISOString();
+  const stored = {
+    ...item,
+    updatedAt: item.updatedAt || now,
+    dirty: true,
+    deleted: false,
+  };
+  await run(STORE_NAME, 'readwrite', (s) => s.add(stored));
+  return stored;
 };
 
 const updateItem = async (item) => {
-  await run(STORE_NAME, 'readwrite', (s) => s.put(item));
-  return item;
+  const stored = { ...item, updatedAt: item.updatedAt || new Date().toISOString(), dirty: true };
+  await run(STORE_NAME, 'readwrite', (s) => s.put(stored));
+  return stored;
 };
 
 const deleteItem = async (id) => {
@@ -94,7 +131,23 @@ const putRaw = (item) => run(STORE_NAME, 'readwrite', (s) => s.put(item));
 
 const getDirty = async () => {
   const all = (await run(STORE_NAME, 'readonly', (s) => s.getAll())) || [];
-  return all.filter((i) => i.dirty);
+  const dirty = all.filter((item) => item.dirty);
+  return Promise.all(
+    dirty.map(async (item) => {
+      const normalized = {
+        ...item,
+        updatedAt: item.updatedAt || item.createdAt || new Date().toISOString(),
+        deleted: Boolean(item.deleted),
+      };
+      if (
+        normalized.updatedAt !== item.updatedAt ||
+        normalized.deleted !== item.deleted
+      ) {
+        await putRaw(normalized);
+      }
+      return normalized;
+    })
+  );
 };
 
 // Clears dirty only if the item wasn't edited again during the sync

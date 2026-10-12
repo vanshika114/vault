@@ -18,6 +18,7 @@ Everything is stored locally in your browser using **IndexedDB**, so your data s
 - ↕️ **Sorting** — Sort by newest or oldest
 - ✏️ **Edit** — Modify saved items anytime
 - 🗑️ **Delete** — Remove items with confirmation
+- 🔐 **Account-less Sync** — Link devices with a private four-word vault code
 - 🌙 **Dark Mode** — Switch between light and dark themes
 - 📱 **Responsive** — Works across desktop and mobile
 - 💾 **Local Storage** — Data persists using IndexedDB
@@ -102,13 +103,32 @@ Other searchable metadata
 
 💾 Data & Privacy
 
-Vault uses IndexedDB to persist data directly in the browser.
+Vault keeps a local copy in IndexedDB. When sync is configured, item data and image
+blobs are encrypted in the browser with keys derived from your four-word vault code
+before they are sent to the Cloudflare Worker. The server stores encrypted item
+records in D1 and encrypted images in R2; it never receives the vault code or
+decryption key.
 
-Your saved information is stored locally rather than being sent to a backend server.
+Save the vault code somewhere safe. It is the only way to link another device, and
+there is no account-based recovery. Clearing a browser's site data removes that
+device's local copy; synced copies can be restored by opening the same code.
 
-Your vault stays in your browser.
+### Configure cross-device sync
 
-Clearing your browser's site data may remove locally stored Vault data, so keep this in mind before clearing browser storage.
+1. From `vault-sync/`, create the D1 database with `npx wrangler d1 create vault-sync`
+   and an R2 bucket with `npx wrangler r2 bucket create vault-sync-blobs`.
+2. Replace the `database_id` in `vault-sync/wrangler.jsonc` with the ID printed
+   for your D1 database.
+3. From `vault-sync/`, apply the migration with
+   `npx wrangler d1 migrations apply vault-sync --remote`, then deploy with
+   `npm run deploy`.
+4. Copy `.env.example` to `.env` and set `VITE_SYNC_URL` to the deployed Worker
+   URL. Restart Vite after changing the environment file.
+
+The Worker only accepts browser origins at `https://vault-ecru-ten.vercel.app`
+and localhost Vite development origins on ports 5173 and 5174. Its rate limiter
+allows 60 requests per IP per minute. For a different production domain, update
+the Worker origin allowlist before deploying.
 
 
 ⚡ Performance

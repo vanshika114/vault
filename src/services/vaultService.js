@@ -1,9 +1,11 @@
 import { storageService } from './storageService';
 import { searchService } from './searchService';
+import { scheduleSync } from './syncService';
 
 const generateId = () => `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
 const createVaultItem = (type, title, content, description = '', tags = [], metadata = {}) => {
+  const now = new Date().toISOString();
   return {
     id: generateId(),
     type,
@@ -12,14 +14,18 @@ const createVaultItem = (type, title, content, description = '', tags = [], meta
     description,
     tags,
     metadata,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: now,
+    updatedAt: now,
+    dirty: true,
+    deleted: false,
   };
 };
 
 const addItem = async (type, title, content, description = '', tags = [], metadata = {}) => {
   const item = createVaultItem(type, title, content, description, tags, metadata);
-  return storageService.addItem(item);
+  const added = await storageService.addItem(item);
+  scheduleSync();
+  return added;
 };
 
 const updateItem = async (id, updates) => {
@@ -30,13 +36,19 @@ const updateItem = async (id, updates) => {
     ...item,
     ...updates,
     updatedAt: new Date().toISOString(),
+    dirty: true,
+    deleted: false,
   };
 
-  return storageService.updateItem(updated);
+  const saved = await storageService.updateItem(updated);
+  scheduleSync();
+  return saved;
 };
 
 const deleteItem = async (id) => {
-  return storageService.deleteItem(id);
+  const deleted = await storageService.deleteItem(id);
+  scheduleSync();
+  return deleted;
 };
 
 const getAllItems = async () => {

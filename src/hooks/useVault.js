@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { vaultService } from '../services/vaultService';
 import { storageService } from '../services/storageService';
 
@@ -7,13 +7,17 @@ export const useVault = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const loadItems = useCallback(async () => {
+    const allItems = await vaultService.getAllItems();
+    setItems(allItems);
+  }, []);
+
   useEffect(() => {
     const initialize = async () => {
       try {
         setLoading(true);
         await storageService.initDB();
-        const allItems = await vaultService.getAllItems();
-        setItems(allItems);
+        await loadItems();
         setError(null);
       } catch (err) {
         setError(err.message || 'Failed to load vault');
@@ -24,7 +28,14 @@ export const useVault = () => {
     };
 
     initialize();
-  }, []);
+  }, [loadItems]);
+
+  // Reload when sync pulls changes from another device
+  useEffect(() => {
+    const onSynced = () => loadItems().catch(console.error);
+    window.addEventListener('vault-synced', onSynced);
+    return () => window.removeEventListener('vault-synced', onSynced);
+  }, [loadItems]);
 
   const addItem = async (type, title, content, description = '', tags = [], metadata = {}) => {
     try {
